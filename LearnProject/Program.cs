@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnPoject
+namespace LearnProject
 {
     using System;
 
@@ -34,6 +34,13 @@ namespace LearnPoject
             int textPosition = n - 1;
             int textLength = s.Length;
 
+            // Проверка на допустимую длину строки
+            if (textLength > width - 2 * textPosition - 2)
+            {
+                Console.WriteLine("Строка слишком длинная для заданной позиции");
+                return;
+            }
+
             // Вычисление ширины полосок
             int stripWidth = (width - textLength - 2 * textPosition) / 2;
 
@@ -44,18 +51,24 @@ namespace LearnPoject
                 return;
             }
 
-            // Вывод верхнего прямоугольника с надписью "Привет"
-            int topRectHeight = 9;
-            int i = 0;
-            do
+            // Отрисовка трех таблиц
+            DrawTopTable(width);
+            DrawMiddleTable(width);
+            DrawBottomTable(width);
+        }
+
+        static void DrawTopTable(int width)
+        {
+            int height = 9;
+            for (int i = 0; i < height; i++)
             {
-                if (i == 0 || i == topRectHeight)
+                if (i == 0 || i == height)
                 {
                     Console.WriteLine(new string('+', width));
                 }
-                else if (i == topRectHeight / 2)
+                else if (i == height / 2)
                 {
-                    int helloPosition = (width - "Привет".Length) - 8;
+                    int helloPosition = (width - "Привет".Length - 2) / 2;
                     Console.Write("+");
                     Console.Write(new string(' ', helloPosition));
                     Console.Write("Привет");
@@ -65,15 +78,15 @@ namespace LearnPoject
                 {
                     Console.WriteLine("+" + new string(' ', width - 2) + "+");
                 }
-                i++;
-            } while (i < topRectHeight);
+            }
+        }
 
-            // Вывод второго прямоугольника с полосками
-            int middleRectHeight = 8;
-            i = 0;
-            while (i < middleRectHeight)
+        static void DrawMiddleTable(int width)
+        {
+            int height = 8;
+            for (int i = 0; i < height; i++)
             {
-                if (i == 0 || i == middleRectHeight)
+                if (i == 0 || i == height)
                 {
                     Console.WriteLine(new string('+', width));
                 }
@@ -86,11 +99,12 @@ namespace LearnPoject
                     }
                     Console.WriteLine("+");
                 }
-                i++;
             }
+        }
 
-            // Вывод третьего прямоугольника с диагональными полосками
-            for (i = 0; i < width; i++)
+        static void DrawBottomTable(int width)
+        {
+            for (int i = 0; i < width; i++)
             {
                 if (i == 0 || i == width - 1)
                 {
@@ -101,7 +115,7 @@ namespace LearnPoject
                     Console.Write("+");
                     for (int j = 0; j < width - 2; j++)
                     {
-                        Console.Write((i == j + 1 || i + j == width - 3) ? "+" : " ");
+                        Console.Write((i == j + 1 || i + j == width - 2) ? "+" : " ");
                     }
                     Console.WriteLine("+");
                 }
@@ -109,4 +123,3 @@ namespace LearnPoject
         }
     }
 }
-
